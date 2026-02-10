@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 8272959825100089869}
   - component: {fileID: 2500016798255280548}
   - component: {fileID: 3412318010145192888}
-  - component: {fileID: 4714393498077282954}
   - component: {fileID: 3752404572598628836}
   - component: {fileID: 5016796433398627693}
+  - component: {fileID: 4019439589648227817}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -168,29 +168,35 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 852140f2-7766-474d-8707-702459ba45f3
+    m_ActionName: 'Player/Interact[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 27c5f898-bc57-4ee1-8800-db469aca5fe3
+    m_ActionName: 'Player/Crouch[/Keyboard/c]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f1ba0d36-48eb-4cd5-b651-1c94a6531f70
+    m_ActionName: 'Player/Jump[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2776c80d-3c14-4091-8c56-d04ced07a2b0
+    m_ActionName: 'Player/Previous[/Keyboard/1]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba
+    m_ActionName: 'Player/Next[/Keyboard/2]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 641cd816-40e6-41b4-8c3d-04687c349290
+    m_ActionName: 'Player/Sprint[/Keyboard/leftShift]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &4714393498077282954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6264114325874547999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f140c3d8802fae1458d9b5a898830e3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <PlayerNumber>k__BackingField: 0
-  <PlayerColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-  <SpriteRenderer>k__BackingField: {fileID: 2500016798255280548}
-  <Rigidbody2D>k__BackingField: {fileID: 3752404572598628836}
-  <MoveSpeed>k__BackingField: 10
-  <JumpForce>k__BackingField: 5
 --- !u!50 &3752404572598628836
 Rigidbody2D:
   serializedVersion: 5
@@ -206,7 +212,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -254,3 +260,21 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &4019439589648227817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6264114325874547999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1b7646adb6fb54e82b46863e5c9ef3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <PlayerNumber>k__BackingField: 0
+  <PlayerColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
+  <SpriteRenderer>k__BackingField: {fileID: 2500016798255280548}
+  <Rigidbody2D>k__BackingField: {fileID: 3752404572598628836}
+  <MoveSpeed>k__BackingField: 10
+  <JumpForce>k__BackingField: 5

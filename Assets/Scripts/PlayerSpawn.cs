@@ -39,7 +39,7 @@ public class PlayerSpawn : MonoBehaviour
         PlayerCount++;
 
         // Set up player controller
-        PlayerController playerController = playerInput.gameObject.GetComponent<PlayerController>();
+        bPlayerController playerController = playerInput.gameObject.GetComponent<bPlayerController>();
         playerController.AssignPlayerInputDevice(playerInput);
         playerController.AssignPlayerNumber(PlayerCount);
         playerController.AssignColor(color);
