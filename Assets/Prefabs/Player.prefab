@@ -277,8 +277,9 @@ MonoBehaviour:
   <PlayerColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   <SpriteRenderer>k__BackingField: {fileID: 2500016798255280548}
   <Rigidbody2D>k__BackingField: {fileID: 3752404572598628836}
-  <MoveSpeed>k__BackingField: 10
-  <JumpForce>k__BackingField: 5
+  <MoveSpeed>k__BackingField: 15
+  <DashSpeed>k__BackingField: 25
+  <deccelSpeed>k__BackingField: 5
   isGhost: 0
 --- !u!114 &-3673571420627840513
 MonoBehaviour:
