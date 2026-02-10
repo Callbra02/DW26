@@ -31,42 +31,49 @@ public class CameraController : MonoBehaviour
 
     void UpdateCameraPosition(List<GameObject> players)
     {
+        // Vars for high and low coords
         float highX = 0;
         float lowX = 0;
         float highY = 0;
         float lowY = 0;
         
-        for (int i = 0; i < players.Count; i++)
+        // Loop through players
+        for (int currentPlayerIndex = 0; currentPlayerIndex < players.Count; currentPlayerIndex++)
         {
-            if (i == 0)
+            var currentPlayer = players[currentPlayerIndex];
+            
+            // Assign first players values
+            if (currentPlayerIndex == 0)
             {
-                highX = players[i].transform.position.x;
-                lowX = players[i].transform.position.x;
-                highY = players[i].transform.position.y;
-                lowY = players[i].transform.position.y;
+                highX = currentPlayer.transform.position.x;
+                lowX = currentPlayer.transform.position.x;
+                highY = currentPlayer.transform.position.y;
+                lowY = currentPlayer.transform.position.y;
+            }
+            
+            if (currentPlayer.transform.position.x > highX)
+            {
+                highX = currentPlayer.transform.position.x;
+            }
+            else if (currentPlayer.transform.position.x < lowX)
+            {
+                lowX = currentPlayer.transform.position.x;
             }
 
-            if (players[i].transform.position.x > highX)
+            if (currentPlayer.transform.position.y > highY)
             {
-                highX = players[i].transform.position.x;
+                highY = currentPlayer.transform.position.y;
             }
-            else if (players[i].transform.position.x < lowX)
+            else if (currentPlayer.transform.position.y < lowY)
             {
-                lowX = players[i].transform.position.x;
-            }
-
-            if (players[i].transform.position.y > highY)
-            {
-                highY = players[i].transform.position.y;
-            }
-            else if (players[i].transform.position.y < lowY)
-            {
-                lowY = players[i].transform.position.y;
+                lowY = currentPlayer.transform.position.y;
             }
         }
 
+        // Get midpoint between furthest players
         Vector3 m = new Vector3((highX + lowX) / 2, (highY + lowY) / 2, -10);
         
+        // Update camera position
         leftCam.transform.position = m;
     }
 }

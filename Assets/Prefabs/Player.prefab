@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3752404572598628836}
   - component: {fileID: 5016796433398627693}
   - component: {fileID: 4019439589648227817}
+  - component: {fileID: -3673571420627840513}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -278,3 +279,18 @@ MonoBehaviour:
   <Rigidbody2D>k__BackingField: {fileID: 3752404572598628836}
   <MoveSpeed>k__BackingField: 10
   <JumpForce>k__BackingField: 5
+  isGhost: 0
+--- !u!114 &-3673571420627840513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6264114325874547999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a43d6876bddbf74f968d37abb1fc00b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerVisPrefab: {fileID: 1422467503596447755, guid: 6e5c3125a7eb36d4b89bda316871764c, type: 3}
+  spawnOffset: {x: 57.6, y: 0, z: 0}
