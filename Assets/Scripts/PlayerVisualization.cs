@@ -11,6 +11,7 @@ public class PlayerVisualization : MonoBehaviour
     
     void Start()
     {
+        // Get player controller
         playerController = this.GetComponent<bPlayerController>();
         
         // Instantiate player visualizer prefab

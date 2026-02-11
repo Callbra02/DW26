@@ -37,14 +37,21 @@ public class PlayerSpawn : MonoBehaviour
 
         // Increment player count
         PlayerCount++;
+        
+        // Set gamemanager playercount
+        GameManager.Instance.playerCount = PlayerCount;
 
         // Set up player controller
         bPlayerController playerController = playerInput.gameObject.GetComponent<bPlayerController>();
         playerController.AssignPlayerInputDevice(playerInput);
         playerController.AssignPlayerNumber(PlayerCount);
         playerController.AssignColor(color);
+        
+        // Add playercontroller to gamemanager list
+        GameManager.Instance.PlayerControllers.Add(playerController);
     }
 
+    
     public void OnPlayerLeft(PlayerInput playerInput)
     {
         // Not handling anything right now.

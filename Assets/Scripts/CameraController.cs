@@ -4,29 +4,24 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-
     public Camera leftCam;
     public Camera rightCam;
-
     public Transform leftCameraTarget;
-
     public List<GameObject> players;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public bool toggleFollowCam = false;
 
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.FindGameObjectsWithTag("Player").Length > players.Count)
+        // Refresh player count
+        if (GameManager.Instance.playerCount > players.Count)
         {
             players = GameObject.FindGameObjectsWithTag("Player").ToList();
         }
         
-        UpdateCameraPosition(players);
+        // Update camera to center position if toggled
+        if (toggleFollowCam)
+            UpdateCameraPosition(players);
     }
 
     void UpdateCameraPosition(List<GameObject> players)
