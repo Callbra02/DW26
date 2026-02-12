@@ -8,7 +8,8 @@ public class PlayerUIController : MonoBehaviour
     public List<GameObject> playerUIWidgets {get; private set;} = new List<GameObject>();
     
     void Update()
-    {   // If new player joins, create a widget for health and stamina
+    {   
+        // If new player joins, create a widget for health and stamina
         if (GameManager.Instance.playerCount > playerUIWidgets.Count)
         {
             CreateWidget();

@@ -281,6 +281,10 @@ MonoBehaviour:
   <DashSpeed>k__BackingField: 25
   <deccelSpeed>k__BackingField: 5
   isGhost: 0
+  dashStaminaTax: 2.5
+  dashStaminaRegenRate: 1
+  maxHealth: 100
+  currentHealth: 0
 --- !u!114 &-3673571420627840513
 MonoBehaviour:
   m_ObjectHideFlags: 0
