@@ -100,9 +100,15 @@ public class bPlayerController : MonoBehaviour
             return;
         
         HandleDash();
-        
-        HandlePlayerInteract();
-        HandleGhostInteract();
+
+        if (isGhost)
+        {
+            HandleGhostInteract();
+        }
+        else
+        {
+            HandlePlayerInteract();
+        }
     }
     
     void HandlePlayerInteract()
@@ -139,8 +145,11 @@ public class bPlayerController : MonoBehaviour
     {
         // Prevent dashing for ghosts
         if (isGhost)
+        {
+            CurrentSpeed = MoveSpeed;
             return;
-        
+        }
+
         HandleStaminaRegeneration();
         
         // If player can dash, and is dashing, deplete stamina and raise movement speed

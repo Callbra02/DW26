@@ -7,6 +7,8 @@ public class PlayerSpawn : MonoBehaviour
     [field: SerializeField] public Color[] PlayerColors { get; private set; }
     public int PlayerCount { get; private set; }
 
+    public int ghostNumber = 1;
+
     public void OnPlayerJoined(PlayerInput playerInput)
     {
         int maxPlayerCount = Mathf.Min(SpawnPoints.Length, PlayerColors.Length);
@@ -47,11 +49,20 @@ public class PlayerSpawn : MonoBehaviour
         playerController.AssignPlayerNumber(PlayerCount);
         playerController.AssignColor(color);
         
+        // Playercount check
+        if (PlayerCount == 1)
+        {
+            playerController.isGhost = true;
+        }
+        
+        // Create UI widget for players
+        if (!playerController.isGhost)
+            PlayerUIController.Instance.CreateWidget();
+        
         // Add playercontroller to gamemanager list
         GameManager.Instance.PlayerControllers.Add(playerController);
     }
 
-    
     public void OnPlayerLeft(PlayerInput playerInput)
     {
         // Not handling anything right now.

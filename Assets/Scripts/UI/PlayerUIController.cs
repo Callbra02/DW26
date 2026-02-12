@@ -3,18 +3,26 @@ using UnityEngine;
 
 public class PlayerUIController : MonoBehaviour
 {
+    public static PlayerUIController Instance;
+    
     [field: SerializeField] public GameObject playerUIWidgetPrefab;
     public GameObject PlayerWidgetHolder;
     public List<GameObject> playerUIWidgets {get; private set;} = new List<GameObject>();
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     
     void Update()
     {   
-        // If new player joins, create a widget for health and stamina
-        if (GameManager.Instance.playerCount > playerUIWidgets.Count)
-        {
-            CreateWidget();
-        }
-        
         // Update widget values | e.g. slider values
         UpdateWidgets();
     }
