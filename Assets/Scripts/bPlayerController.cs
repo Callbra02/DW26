@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,6 +26,9 @@ public class bPlayerController : MonoBehaviour
     public float maxHealth = 100.0f;
     public float currentHealth;
 
+    private bool isInteracting = false;
+    private GameObject currentArtifact = null;
+    
     // Player input information
     private PlayerInput PlayerInput;
     private InputAction InputActionMove;
@@ -94,6 +98,11 @@ public class bPlayerController : MonoBehaviour
         if (InputActionInteract.WasPressedThisFrame())
         {
             Debug.Log("Player Interact");
+            isInteracting = true;
+        }
+        else
+        {
+            isInteracting = false;
         }
     }
 
@@ -174,6 +183,24 @@ public class bPlayerController : MonoBehaviour
         }
     }
 
+    private void PickupArtifact(GameObject artifactObject)
+    {
+        currentArtifact = artifactObject;
+        currentArtifact.GetComponent<CircleCollider2D>().enabled = false;
+        currentArtifact.transform.position = this.transform.position;
+        currentArtifact.transform.SetParent(this.transform);
+    }
+
+    private void DropArtifact()
+    {
+        if (currentArtifact == null)
+            return;
+        
+        currentArtifact.GetComponent<CircleCollider2D>().enabled = true;
+        currentArtifact.transform.SetParent(null);
+        currentArtifact = null;
+    }
+    
     // OnValidate runs after any change in the inspector for this script.
     private void OnValidate()
     {
@@ -188,5 +215,13 @@ public class bPlayerController : MonoBehaviour
             Rigidbody2D = GetComponent<Rigidbody2D>();
         if (SpriteRenderer == null)
             SpriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (isInteracting && !isGhost)
+        {
+            PickupArtifact(other.gameObject);
+        }
     }
 }
