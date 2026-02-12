@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public class bPlayerController : MonoBehaviour
 {
@@ -12,7 +14,10 @@ public class bPlayerController : MonoBehaviour
     [field: SerializeField] public float DashSpeed { get; private set; } = 15f;
     [field: SerializeField] public float deccelSpeed { get; private set; } = 2.5f;
     
+    private Coroutine runningCoroutine;
+    
     public bool isGhost = false;
+
     private bool canDash = true;
     private bool isDashing = false;
     public float dashStaminaTax = 2.5f;
@@ -26,6 +31,11 @@ public class bPlayerController : MonoBehaviour
     public float maxHealth = 100.0f;
     public float currentHealth;
 
+    public bool isScared = false;
+    private bool CR_DoScare = false;
+    public float scareTime = 2.5f;
+    private Vector2 scareDir;
+    
     private bool isInteracting = false;
     private GameObject currentArtifact = null;
     
@@ -33,6 +43,8 @@ public class bPlayerController : MonoBehaviour
     private PlayerInput PlayerInput;
     private InputAction InputActionMove;
     private InputAction InputActionInteract;
+
+    private bool isColliding = false;
 
     private void Start()
     {
@@ -83,6 +95,10 @@ public class bPlayerController : MonoBehaviour
     // Runs each frame
     public void Update()
     {
+        // Break from logic if player is scared
+        if (isScared)
+            return;
+        
         HandleDash();
         
         HandlePlayerInteract();
@@ -158,23 +174,56 @@ public class bPlayerController : MonoBehaviour
             canDash = true;
         }
     }
+
+    // Return new random scare direction
+    Vector2 GetScareDirection()
+    {
+        return new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
+    }
     
     // Runs each phsyics update
     void FixedUpdate()
     {
+        // Log if player does not have a rigidbody
         if (Rigidbody2D == null)
         {
             Debug.Log($"{name}'s {nameof(PlayerController)}.{nameof(Rigidbody2D)} is null.");
             return;
         }
 
+        // Declare and initialize moveValue to a default
+        Vector2 moveValue = new Vector2();
+        
+        if (isScared)
+        {
+            // If scare coroutine is not running, set running coroutine to DoScare
+            // Stop coroutine after given scare time
+            // Only do this once per isScared cycle
+            if (!CR_DoScare)
+            {
+                if (currentArtifact != null)
+                    DropArtifact();
+                
+                runningCoroutine = StartCoroutine(DoScare());
+                StartCoroutine(StopCrAfter(scareTime));
+                CR_DoScare = true;
+            }
+
+            // Set movedir to scaredir
+            moveValue = scareDir;
+        }
+        else
+        {
+            // Read player input when appropriate
+            moveValue = InputActionMove.ReadValue<Vector2>();
+        }
+
         // MOVE
-        // Read the "Move" action value, which is a 2D vector
-        Vector2 moveValue = InputActionMove.ReadValue<Vector2>();
         Vector2 moveForce = new Vector2(moveValue.x * CurrentSpeed, moveValue.y * CurrentSpeed);
         Rigidbody2D.AddForceX(moveForce.x, ForceMode2D.Force);
         Rigidbody2D.AddForceY(moveForce.y, ForceMode2D.Force);
 
+        // If player is moving, apply decel vel
         if (Rigidbody2D.linearVelocity != Vector2.zero)
         {
             // Decelerate the player
@@ -183,6 +232,7 @@ public class bPlayerController : MonoBehaviour
         }
     }
 
+    // Pickup artifact if player interacts with one
     private void PickupArtifact(GameObject artifactObject)
     {
         currentArtifact = artifactObject;
@@ -191,6 +241,7 @@ public class bPlayerController : MonoBehaviour
         currentArtifact.transform.SetParent(this.transform);
     }
 
+    // Drops artifact if player has one currently
     private void DropArtifact()
     {
         if (currentArtifact == null)
@@ -217,11 +268,59 @@ public class bPlayerController : MonoBehaviour
             SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    // End all running coroutines on end
+    private void OnApplicationQuit()
+    {
+        StopAllCoroutines();
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        isColliding = true;
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        isColliding = false;
+    }
+
     private void OnTriggerStay2D(Collider2D other)
     {
         if (isInteracting && !isGhost)
         {
             PickupArtifact(other.gameObject);
+        }
+    }
+
+    // Helper function that stops a coroutine after a delay
+    IEnumerator StopCrAfter(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (runningCoroutine != null)
+        {
+            StopCoroutine(runningCoroutine);
+            
+            // Scare is the only coroutine in the script so call these when cr should be stopped
+            CR_DoScare = false;
+            isScared = false;
+        }
+    }
+    
+    IEnumerator DoScare()
+    {
+        CR_DoScare = true;
+        
+        while (true)
+        {
+            // Set scare direction to random direction
+            scareDir = GetScareDirection();
+
+            if (isColliding)
+                scareDir = GetScareDirection();
+            
+            // Wait to swap direction after a tenth of the scaretime
+            yield return new WaitForSeconds(scareTime * 0.1f);
         }
     }
 }
