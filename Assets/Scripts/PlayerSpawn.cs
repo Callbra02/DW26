@@ -65,7 +65,6 @@ public class PlayerSpawn : MonoBehaviour
             playerController.isGhost = true;
         }
         
-        
         // Add playercontroller to gamemanager list
         GameManager.Instance.PlayerControllers.Add(playerController);
         

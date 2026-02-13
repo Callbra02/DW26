@@ -54,6 +54,11 @@ public class bPlayerController : MonoBehaviour
     {
         currentHealth = maxHealth;
         ghostCollider = GetComponentInChildren<GhostCollider>();
+        if (isGhost)
+        {
+            this.GetComponent<PlayerVisualization>().spawnOffset.x =
+                -this.GetComponent<PlayerVisualization>().spawnOffset.x;
+        }
     }
     
     // Assign color value on spawn from main spawner
@@ -135,7 +140,7 @@ public class bPlayerController : MonoBehaviour
         if (InputActionInteract.WasPressedThisFrame())
         {
             Debug.Log("Ghost Interact");
-            if (isPlayerInRange)
+            if (isPlayerInRange && canScare)
             {
                 ghostCollider.playerInRange.isScared = true;
             }
@@ -163,6 +168,13 @@ public class bPlayerController : MonoBehaviour
         }
 
         HandleStaminaRegeneration();
+
+        // If player is scared, dash and do not tax player
+        if (isScared)
+        {
+            CurrentSpeed = DashSpeed;
+            return;
+        }
         
         // If player can dash, and is dashing, deplete stamina and raise movement speed
         if (isDashing && canDash)
@@ -307,6 +319,9 @@ public class bPlayerController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
+        if (!other.gameObject.CompareTag("Artifact"))
+            return;
+        
         if (isInteracting && !isGhost)
         {
             PickupArtifact(other.gameObject);

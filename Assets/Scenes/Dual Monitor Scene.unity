@@ -350,7 +350,7 @@ GameObject:
   - component: {fileID: 131750200}
   m_Layer: 0
   m_Name: Collider (3)
-  m_TagString: Untagged
+  m_TagString: LevelColliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -633,7 +633,7 @@ GameObject:
   - component: {fileID: 375107562}
   m_Layer: 0
   m_Name: Collider (9)
-  m_TagString: Untagged
+  m_TagString: LevelColliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -776,7 +776,7 @@ GameObject:
   - component: {fileID: 493315640}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: LevelColliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -854,7 +854,7 @@ GameObject:
   - component: {fileID: 496392690}
   m_Layer: 0
   m_Name: Collider (4)
-  m_TagString: Untagged
+  m_TagString: LevelColliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1647,7 +1647,7 @@ GameObject:
   - component: {fileID: 840036447}
   m_Layer: 0
   m_Name: Collider (1)
-  m_TagString: Untagged
+  m_TagString: LevelColliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2171,7 +2171,7 @@ GameObject:
   - component: {fileID: 948055316}
   m_Layer: 0
   m_Name: Collider (12)
-  m_TagString: Untagged
+  m_TagString: LevelColliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2408,7 +2408,7 @@ GameObject:
   - component: {fileID: 1086016947}
   m_Layer: 0
   m_Name: Collider (5)
-  m_TagString: Untagged
+  m_TagString: LevelColliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2800,7 +2800,7 @@ GameObject:
   - component: {fileID: 1182163300}
   m_Layer: 0
   m_Name: Collider (7)
-  m_TagString: Untagged
+  m_TagString: LevelColliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3211,7 +3211,7 @@ GameObject:
   - component: {fileID: 1286968012}
   m_Layer: 0
   m_Name: Collider (2)
-  m_TagString: Untagged
+  m_TagString: LevelColliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3677,7 +3677,7 @@ GameObject:
   - component: {fileID: 1560573927}
   m_Layer: 0
   m_Name: Collider (6)
-  m_TagString: Untagged
+  m_TagString: LevelColliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3786,7 +3786,7 @@ GameObject:
   - component: {fileID: 1623090254}
   m_Layer: 0
   m_Name: Collider (10)
-  m_TagString: Untagged
+  m_TagString: LevelColliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4085,7 +4085,7 @@ GameObject:
   - component: {fileID: 1655047627}
   m_Layer: 0
   m_Name: Collider (11)
-  m_TagString: Untagged
+  m_TagString: LevelColliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4163,7 +4163,7 @@ GameObject:
   - component: {fileID: 1674817842}
   m_Layer: 0
   m_Name: Collider (8)
-  m_TagString: Untagged
+  m_TagString: LevelColliders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
