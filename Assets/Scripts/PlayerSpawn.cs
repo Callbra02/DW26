@@ -7,7 +7,7 @@ public class PlayerSpawn : MonoBehaviour
     [field: SerializeField] public Color[] PlayerColors { get; private set; }
     public int PlayerCount { get; private set; }
 
-    public int ghostNumber = 1;
+    public int ghostNumber { get; private set; } = 5;
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {
@@ -33,8 +33,17 @@ public class PlayerSpawn : MonoBehaviour
         }
 
         // Assign spawn transform values
-        playerInput.transform.position = SpawnPoints[PlayerCount].position;
-        playerInput.transform.rotation = SpawnPoints[PlayerCount].rotation;
+        if (PlayerCount + 1 == ghostNumber)
+        {
+            playerInput.transform.position = SpawnPoints[5].position;
+            playerInput.transform.rotation = SpawnPoints[5].rotation;
+        }
+        else
+        {
+            playerInput.transform.position = SpawnPoints[PlayerCount].position;
+            playerInput.transform.rotation = SpawnPoints[PlayerCount].rotation;
+        }
+        
         Color color = PlayerColors[PlayerCount];
 
         // Increment player count
@@ -49,18 +58,20 @@ public class PlayerSpawn : MonoBehaviour
         playerController.AssignPlayerNumber(PlayerCount);
         playerController.AssignColor(color);
         
-        // Playercount check
-        if (PlayerCount == 1)
+        
+        // Playercount check\
+        if (playerController.PlayerNumber == ghostNumber)
         {
             playerController.isGhost = true;
         }
         
-        // Create UI widget for players
-        if (!playerController.isGhost)
-            PlayerUIController.Instance.CreateWidget();
         
         // Add playercontroller to gamemanager list
         GameManager.Instance.PlayerControllers.Add(playerController);
+        
+        // Create UI widget for players
+        if (!playerController.isGhost) 
+            PlayerUIController.Instance.CreateWidget();
     }
 
     public void OnPlayerLeft(PlayerInput playerInput)

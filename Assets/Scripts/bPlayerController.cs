@@ -113,10 +113,6 @@ public class bPlayerController : MonoBehaviour
     
     void HandlePlayerInteract()
     {
-        // Break if ghost
-        if (isGhost)
-            return;
-
         if (InputActionInteract.WasPressedThisFrame())
         {
             Debug.Log("Player Interact");
@@ -130,10 +126,6 @@ public class bPlayerController : MonoBehaviour
 
     void HandleGhostInteract()
     {
-        // Break if not ghost
-        if (!isGhost)
-            return;
-        
         if (InputActionInteract.WasPressedThisFrame())
         {
             Debug.Log("Ghost Interact");

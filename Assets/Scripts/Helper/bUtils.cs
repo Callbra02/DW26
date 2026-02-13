@@ -16,4 +16,16 @@ public static class bUtils
         // Else return the normalized value between 0 and 1
         return (value - min) / (max - min);
     }
+
+    public static void RotateToDirection(Vector2 dir, Transform transform)
+    {
+        if (dir != Vector2.zero)
+        {
+            float a = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+            float rot = a;
+
+            transform.eulerAngles = new Vector3(0, 0, a);
+        }
+    }
 }
