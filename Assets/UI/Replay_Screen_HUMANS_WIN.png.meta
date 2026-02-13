@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 493896ead1fbd0e4db33a883a5e64aa3
+guid: 25ad9f0d8c9538c46ab6674ddbfd9fcc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3992511562661306511
-    second: Replay_Screen_0
+      213: -188592713345802138
+    second: Replay_Screen_HUMANS_WIN_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Replay_Screen_0
+      name: Replay_Screen_HUMANS_WIN_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 17fdee113efb798c0800000000000000
-      internalID: -3992511562661306511
+      spriteID: 660ebc92debf16df0800000000000000
+      internalID: -188592713345802138
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Replay_Screen_0: -3992511562661306511
+      Replay_Screen_HUMANS_WIN_0: -188592713345802138
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
