@@ -39,7 +39,6 @@ public class GameManager : MonoBehaviour
 
         // Create spawn point array
         artifactSpawnPoints = new Transform[artifactSpawnPointHolder.transform.childCount];
-        
         // Populate artifact spawn points 
         for (int i = 0; i < artifactSpawnPointHolder.transform.childCount; i++)
         {
@@ -53,6 +52,7 @@ public class GameManager : MonoBehaviour
     {
         gameTimer -= Time.deltaTime;
 
+        
         if (objectivesCompleted == artifactCount)
         {
             HumanWin();
@@ -74,13 +74,17 @@ public class GameManager : MonoBehaviour
             Transform selectedPoint = availableSpawnPoints[randomIndex];
 
             GameObject newArtifact = Instantiate(artifactPrefab, selectedPoint.position, selectedPoint.rotation);
+            GameObject artifactVis = Instantiate(artifactPrefab, selectedPoint.position, selectedPoint.rotation);
+            
 
             newArtifact.GetComponent<SpriteRenderer>().sprite = artifactSprites[Random.Range(0, artifactSprites.Length)];
-            
+            artifactVis.GetComponent<SpriteRenderer>().sprite = newArtifact.GetComponent<SpriteRenderer>().sprite;
             availableSpawnPoints.RemoveAt(randomIndex);
+            newArtifact.GetComponent<Artifact>().visualizer = artifactVis;
         }
     }
 
+    
     void GhostWin()
     {
         SceneManager.LoadScene(3);

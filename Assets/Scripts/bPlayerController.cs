@@ -18,6 +18,8 @@ public class bPlayerController : MonoBehaviour
     private Coroutine runningCoroutine;
     
     public bool isGhost = false;
+    public int activeTrapCount = 0;
+    public GameObject ghostTrapPrefab;
     private bool isPlayerInRange = false;
     public bool canScare = true;
     public CircleCollider2D ghostScareCollider;
@@ -44,12 +46,14 @@ public class bPlayerController : MonoBehaviour
     private Vector2 scareDir;
     
     private bool isInteracting = false;
-    private GameObject currentArtifact = null;
+    public GameObject currentArtifact = null;
     
     // Player input information
     private PlayerInput PlayerInput;
     private InputAction InputActionMove;
     private InputAction InputActionInteract;
+    private InputAction InputActionInteract2;
+    private InputAction InputActionGhostDash;
 
     private bool isColliding = false;
 
@@ -95,6 +99,9 @@ public class bPlayerController : MonoBehaviour
         
         // Setup context bool for interact button
         InputActionInteract = playerInput.actions.FindAction($"Player/Interact");
+        InputActionInteract2 = playerInput.actions.FindAction($"Player/Interact2");
+        InputActionGhostDash = playerInput.actions.FindAction($"Player/Dash");
+        
         playerInput.actions.FindAction("Player/Dash").started += ctx => isDashing = true;
         playerInput.actions.FindAction("Player/Dash").canceled += ctx => isDashing = false;
     }
@@ -108,14 +115,13 @@ public class bPlayerController : MonoBehaviour
     // Runs each frame
     public void Update()
     {
-
         HandleSlow();
-        
         // Break from logic if player is scared
-        if (isScared)
+        if (isScared && !isGhost)
             return;
         
         HandleDash();
+
 
         if (isGhost)
         {
@@ -132,7 +138,6 @@ public class bPlayerController : MonoBehaviour
     {
         if (InputActionInteract.WasPressedThisFrame())
         {
-            Debug.Log("Player Interact");
             isInteracting = true;
         }
         else
@@ -143,18 +148,41 @@ public class bPlayerController : MonoBehaviour
 
     void HandleGhostInteract()
     {
+        // Manual Scare Attack
         if (InputActionInteract.WasPressedThisFrame())
         {
-            Debug.Log("Ghost Interact");
             if (isPlayerInRange && canScare)
             {
                 ghostCollider.playerInRange.isScared = true;
             }
         }
+
+        // if above active trap count, break
+        if (activeTrapCount >= 3)
+        {
+            return;
+        }
+        // Trap input
+        if (InputActionInteract2.WasPressedThisFrame())
+        {
+            GameObject newTrap = Instantiate(ghostTrapPrefab);
+            newTrap.transform.position = this.transform.position + new Vector3(-57.6f, 0, 0);
+            activeTrapCount++;
+        }
+        else if (InputActionGhostDash.WasPressedThisFrame())
+        {
+            GameObject newTrap = Instantiate(ghostTrapPrefab);
+            newTrap.transform.position = this.transform.position + new Vector3(-57.6f, 0, 0);
+            newTrap.GetComponent<GhostTrap>().isScareTrap = true;
+            activeTrapCount++;
+        }
     }
 
     void HandleSlow()
     {
+        if (isGhost)
+            return;
+        
         if (!isSlowed)
         {
             slowTimer = 0.0f;
@@ -169,10 +197,6 @@ public class bPlayerController : MonoBehaviour
         }
     }
     
-    void HandleGhostScareTrap()
-    {
-        
-    }
     
     // Updates player speed based on input and stamina
     void HandleDash()
@@ -251,7 +275,7 @@ public class bPlayerController : MonoBehaviour
         // Declare and initialize moveValue to a default
         Vector2 moveValue = new Vector2();
         
-        if (isScared)
+        if (isScared && !isGhost)
         {
             // If scare coroutine is not running, set running coroutine to DoScare
             // Stop coroutine after given scare time
@@ -347,7 +371,14 @@ public class bPlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GhostTrap"))
         {
-            isSlowed = true;
+            if (other.GetComponent<GhostTrap>().isScareTrap)
+            {
+                isScared = true;
+            }
+            else
+            {
+                isSlowed = true;
+            }
         }
     }
     

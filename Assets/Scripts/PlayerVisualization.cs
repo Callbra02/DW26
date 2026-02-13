@@ -18,12 +18,15 @@ public class PlayerVisualization : MonoBehaviour
         playerVisualizer = Instantiate(playerVisPrefab);
         
         // Set color (eventually swap to sprite)
-        playerVisualizer.GetComponent<SpriteRenderer>().color = playerController.PlayerColor;
+        playerVisualizer.GetComponent<SpriteRenderer>().sprite = playerController.GetComponent<SpriteRenderer>().sprite;
+        //playerVisualizer.GetComponent<SpriteRenderer>().color = playerController.PlayerColor;
     }
 
     void Update()
     {
         // Set player visualizer to offset position to reflect on display 2
         playerVisualizer.transform.position = playerController.transform.position + spawnOffset;
+        playerVisualizer.transform.rotation = playerController.transform.rotation;
     }
+
 }

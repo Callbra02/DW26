@@ -6,6 +6,7 @@ public class GhostTrap : MonoBehaviour
 
     public float trapTimer = 0.0f;
     public float trapTimeMax = 15.0f;
+    public bool isScareTrap = false;
 
     private bPlayerController ghostController;
 
@@ -25,6 +26,7 @@ public class GhostTrap : MonoBehaviour
 
     public void DestroyThis()
     {
+        ghostController.activeTrapCount--;
         Destroy(this.gameObject);
     }
 }

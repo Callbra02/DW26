@@ -317,6 +317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCount: 0
+  ghostController: {fileID: 0}
   maxGameTime: 300
   artifactCount: 4
   objectivesCompleted: 0

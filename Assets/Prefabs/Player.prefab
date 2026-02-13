@@ -355,10 +355,13 @@ MonoBehaviour:
   <DashSpeed>k__BackingField: 25
   <deccelSpeed>k__BackingField: 5
   isGhost: 0
+  activeTrapCount: 0
+  ghostTrapPrefab: {fileID: 2358273535413136494, guid: 978f327d7c8b8e545b63d2e6beb66743, type: 3}
   canScare: 1
   ghostScareCollider: {fileID: 0}
   dashStaminaTax: 2.5
   dashStaminaRegenRate: 1
+  isSlowed: 0
   maxHealth: 100
   currentHealth: 0
   isScared: 0
