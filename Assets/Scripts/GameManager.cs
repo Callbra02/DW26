@@ -1,6 +1,7 @@
-using System.Collections.Generic;
+  using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,13 +9,15 @@ public class GameManager : MonoBehaviour
     
     // Retrievable playercount
     public int playerCount;
+    public bPlayerController ghostController;
 
     public float gameTimer { get; private set; }
     public float maxGameTime = 300.0f;
 
     public int artifactCount = 4;
+    public int objectivesCompleted = 0;
     public GameObject artifactPrefab;
-    public List<GameObject> artifacts = new List<GameObject>();
+    public Sprite[] artifactSprites;
     public GameObject artifactSpawnPointHolder;
     private Transform[] artifactSpawnPoints;
 
@@ -50,15 +53,19 @@ public class GameManager : MonoBehaviour
     {
         gameTimer -= Time.deltaTime;
 
+        if (objectivesCompleted == artifactCount)
+        {
+            HumanWin();
+        }
+        
         if (gameTimer <= 0)
         {
-            Debug.Log("END GAME");
+            GhostWin();
         }
     }
 
     void SpawnArtifacts()
     {
-        // 
         List<Transform> availableSpawnPoints = new List<Transform>(artifactSpawnPoints);
 
         for (int i = 0; i < artifactCount; i++)
@@ -66,9 +73,21 @@ public class GameManager : MonoBehaviour
             int randomIndex = Random.Range(0, availableSpawnPoints.Count);
             Transform selectedPoint = availableSpawnPoints[randomIndex];
 
-            Instantiate(artifactPrefab, selectedPoint.position, selectedPoint.rotation);
+            GameObject newArtifact = Instantiate(artifactPrefab, selectedPoint.position, selectedPoint.rotation);
 
+            newArtifact.GetComponent<SpriteRenderer>().sprite = artifactSprites[Random.Range(0, artifactSprites.Length)];
+            
             availableSpawnPoints.RemoveAt(randomIndex);
         }
+    }
+
+    void GhostWin()
+    {
+        SceneManager.LoadScene(3);
+    }
+
+    void HumanWin()
+    {
+        SceneManager.LoadScene(4);
     }
 }

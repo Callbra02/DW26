@@ -29,6 +29,9 @@ public class bPlayerController : MonoBehaviour
     public float maxStamina { get; private set; } = 10.0f;
     public float currentStamina { get; private set; } = 10.0f;
 
+    public bool isSlowed = false;
+    private float slowTimer = 0.0f;
+
     private float CurrentSpeed;
     public bool DoDash { get; private set; }
 
@@ -77,8 +80,8 @@ public class bPlayerController : MonoBehaviour
         // Assign to sprite renderer
         if (SpriteRenderer == null)
             Debug.Log($"Failed to set color to {name} {nameof(PlayerController)}.");
-        else
-            SpriteRenderer.color = PlayerColor;
+        //else
+            //SpriteRenderer.color = PlayerColor;
     }
 
     // Set up player input
@@ -105,6 +108,9 @@ public class bPlayerController : MonoBehaviour
     // Runs each frame
     public void Update()
     {
+
+        HandleSlow();
+        
         // Break from logic if player is scared
         if (isScared)
             return;
@@ -147,11 +153,22 @@ public class bPlayerController : MonoBehaviour
         }
     }
 
-    void HandleGhostSlowTrap()
+    void HandleSlow()
     {
-        
-    }
+        if (!isSlowed)
+        {
+            slowTimer = 0.0f;
+            return;
+        }
 
+        slowTimer += Time.deltaTime;
+
+        if (slowTimer > 2.0f)
+        {
+            isSlowed = false;
+        }
+    }
+    
     void HandleGhostScareTrap()
     {
         
@@ -185,7 +202,14 @@ public class bPlayerController : MonoBehaviour
         // Else regen stamina
         else
         {
-            CurrentSpeed = MoveSpeed;
+            if (isSlowed)
+            {
+                CurrentSpeed = MoveSpeed * 0.5f;
+            }
+            else
+            {
+                CurrentSpeed = MoveSpeed;
+            }
         }
     }
 
@@ -253,6 +277,8 @@ public class bPlayerController : MonoBehaviour
 
         // MOVE
         Vector2 moveForce = new Vector2(moveValue.x * CurrentSpeed, moveValue.y * CurrentSpeed);
+        
+        bUtils.RotateToDirection(new Vector2(moveForce.y, -moveForce.x), this.transform);
         Rigidbody2D.AddForceX(moveForce.x, ForceMode2D.Force);
         Rigidbody2D.AddForceY(moveForce.y, ForceMode2D.Force);
 
@@ -269,18 +295,18 @@ public class bPlayerController : MonoBehaviour
     private void PickupArtifact(GameObject artifactObject)
     {
         currentArtifact = artifactObject;
-        currentArtifact.GetComponent<CircleCollider2D>().enabled = false;
+        currentArtifact.GetComponent<Artifact>().isHeld = true;
         currentArtifact.transform.position = this.transform.position;
         currentArtifact.transform.SetParent(this.transform);
     }
 
     // Drops artifact if player has one currently
-    private void DropArtifact()
+    public void DropArtifact()
     {
         if (currentArtifact == null)
             return;
         
-        currentArtifact.GetComponent<CircleCollider2D>().enabled = true;
+        currentArtifact.GetComponent<Artifact>().isHeld = false;
         currentArtifact.transform.SetParent(null);
         currentArtifact = null;
     }
@@ -290,7 +316,7 @@ public class bPlayerController : MonoBehaviour
     {
         Reset();
     }
-
+    
     // Reset runs when a script is created and when a script is reset from the inspector.
     private void Reset()
     {
@@ -317,12 +343,20 @@ public class bPlayerController : MonoBehaviour
         isColliding = false;
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("GhostTrap"))
+        {
+            isSlowed = true;
+        }
+    }
+    
     private void OnTriggerStay2D(Collider2D other)
     {
         if (!other.gameObject.CompareTag("Artifact"))
             return;
         
-        if (isInteracting && !isGhost)
+        if (isInteracting && !isGhost && !other.GetComponent<Artifact>().isHeld)
         {
             PickupArtifact(other.gameObject);
         }

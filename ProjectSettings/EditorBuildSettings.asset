@@ -6,8 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 640dc715514d3014db1107eb9d51f912
+  - enabled: 1
     path: Assets/Scenes/Dual Monitor Scene.unity
     guid: bc7044024238fb841bd4db6b21830fdd
+  - enabled: 1
+    path: Assets/Scenes/ControlScreen.unity
+    guid: 583e2b49f469fef46b34bc974bbd0502
+  - enabled: 1
+    path: Assets/Scenes/GameOverGhostWins.unity
+    guid: 92502f85856d1624180dabfacc7bad37
+  - enabled: 1
+    path: Assets/Scenes/GameOverHumansWin.unity
+    guid: 570a57a605d663b4f89d76b6e983306c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

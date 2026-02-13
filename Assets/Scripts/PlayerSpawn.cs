@@ -7,7 +7,9 @@ public class PlayerSpawn : MonoBehaviour
     [field: SerializeField] public Color[] PlayerColors { get; private set; }
     public int PlayerCount { get; private set; }
 
-    public int ghostNumber { get; private set; } = 2;
+    public int ghostNumber { get; private set; } = 3;
+
+    public Sprite[] playerSprites;
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {
@@ -57,12 +59,14 @@ public class PlayerSpawn : MonoBehaviour
         playerController.AssignPlayerInputDevice(playerInput);
         playerController.AssignPlayerNumber(PlayerCount);
         playerController.AssignColor(color);
+        playerController.GetComponent<SpriteRenderer>().sprite = playerSprites[PlayerCount - 1];
         
         
         // Playercount check\
         if (playerController.PlayerNumber == ghostNumber)
         {
             playerController.isGhost = true;
+            GameManager.Instance.ghostController = playerController;
         }
         
         // Add playercontroller to gamemanager list

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Artifact
   - LevelColliders
+  - ArtifactPlace
   layers:
   - Default
   - TransparentFX
