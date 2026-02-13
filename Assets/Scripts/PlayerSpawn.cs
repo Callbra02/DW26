@@ -7,7 +7,7 @@ public class PlayerSpawn : MonoBehaviour
     [field: SerializeField] public Color[] PlayerColors { get; private set; }
     public int PlayerCount { get; private set; }
 
-    public int ghostNumber { get; private set; } = 5;
+    public int ghostNumber { get; private set; } = 2;
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {

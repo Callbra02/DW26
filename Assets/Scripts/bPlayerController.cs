@@ -13,10 +13,14 @@ public class bPlayerController : MonoBehaviour
     [field: SerializeField] public float MoveSpeed { get; private set; } = 10f;
     [field: SerializeField] public float DashSpeed { get; private set; } = 15f;
     [field: SerializeField] public float deccelSpeed { get; private set; } = 2.5f;
-    
+
+    private GhostCollider ghostCollider;
     private Coroutine runningCoroutine;
     
     public bool isGhost = false;
+    private bool isPlayerInRange = false;
+    public bool canScare = true;
+    public CircleCollider2D ghostScareCollider;
 
     private bool canDash = true;
     private bool isDashing = false;
@@ -49,6 +53,7 @@ public class bPlayerController : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+        ghostCollider = GetComponentInChildren<GhostCollider>();
     }
     
     // Assign color value on spawn from main spawner
@@ -103,6 +108,7 @@ public class bPlayerController : MonoBehaviour
 
         if (isGhost)
         {
+            this.isPlayerInRange = ghostCollider.isPlayerInRange;
             HandleGhostInteract();
         }
         else
@@ -129,7 +135,21 @@ public class bPlayerController : MonoBehaviour
         if (InputActionInteract.WasPressedThisFrame())
         {
             Debug.Log("Ghost Interact");
+            if (isPlayerInRange)
+            {
+                ghostCollider.playerInRange.isScared = true;
+            }
         }
+    }
+
+    void HandleGhostSlowTrap()
+    {
+        
+    }
+
+    void HandleGhostScareTrap()
+    {
+        
     }
     
     // Updates player speed based on input and stamina
